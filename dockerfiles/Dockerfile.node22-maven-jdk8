@@ -1,11 +1,11 @@
 FROM node:22-bookworm
 
-ENV MAVEN_VERSION=3.9.9
-
-# Install JDK 8 and Maven
-RUN apt-get update && apt-get install -y \
-    openjdk-8-jdk \
-    maven \
+# Install Eclipse Temurin JDK 8 and Maven
+RUN apt-get update && apt-get install -y wget apt-transport-https gnupg \
+    && wget -qO - https://packages.adoptium.net/artifactory/api/gpg/key/public | apt-key add - \
+    && echo "deb https://packages.adoptium.net/artifactory/deb bookworm main" | tee /etc/apt/sources.list.d/adoptium.list \
+    && apt-get update \
+    && apt-get install -y temurin-8-jdk maven \
     && rm -rf /var/lib/apt/lists/*
 
 # Verify installations

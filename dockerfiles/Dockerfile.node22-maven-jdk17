@@ -1,9 +1,11 @@
 FROM node:22-bookworm
 
-# Install JDK 17 and Maven
-RUN apt-get update && apt-get install -y \
-    openjdk-17-jdk \
-    maven \
+# Install Eclipse Temurin JDK 17 and Maven
+RUN apt-get update && apt-get install -y wget apt-transport-https gnupg \
+    && wget -qO - https://packages.adoptium.net/artifactory/api/gpg/key/public | apt-key add - \
+    && echo "deb https://packages.adoptium.net/artifactory/deb bookworm main" | tee /etc/apt/sources.list.d/adoptium.list \
+    && apt-get update \
+    && apt-get install -y temurin-17-jdk maven \
     && rm -rf /var/lib/apt/lists/*
 
 # Verify installations
