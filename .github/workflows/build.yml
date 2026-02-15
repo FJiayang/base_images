@@ -7,7 +7,6 @@ on:
     paths:
       - 'dockerfiles/**'
       - '.github/workflows/**'
-      - 'docker-bake.hcl'
   workflow_dispatch:
 
 jobs:
@@ -52,6 +51,18 @@ jobs:
           push: true
           tags: ${{ steps.meta-docker.outputs.tags }}
           labels: ${{ steps.meta-docker.outputs.labels }}
+          load: true
+
+      - name: Verify docker-cli version (amd64)
+        run: |
+          echo "=== node22-docker (amd64) ==="
+          docker run --rm --platform linux/amd64 ${{ steps.meta-docker.outputs.tags }} docker --version
+          docker run --rm --platform linux/amd64 ${{ steps.meta-docker.outputs.tags }} node --version
+
+      - name: Verify docker-cli version (arm64)
+        run: |
+          echo "=== node22-docker (arm64) ==="
+          docker run --rm --platform linux/arm64 ${{ steps.meta-docker.outputs.tags }} docker --version
 
   build-node22-maven-jdk8:
     runs-on: ubuntu-latest
@@ -94,6 +105,21 @@ jobs:
           push: true
           tags: ${{ steps.meta-jdk8.outputs.tags }}
           labels: ${{ steps.meta-jdk8.outputs.labels }}
+          load: true
+
+      - name: Verify versions (amd64)
+        run: |
+          echo "=== node22-maven-jdk8 (amd64) ==="
+          docker run --rm --platform linux/amd64 ${{ steps.meta-jdk8.outputs.tags }} docker --version
+          docker run --rm --platform linux/amd64 ${{ steps.meta-jdk8.outputs.tags }} java -version
+          docker run --rm --platform linux/amd64 ${{ steps.meta-jdk8.outputs.tags }} mvn --version
+
+      - name: Verify versions (arm64)
+        run: |
+          echo "=== node22-maven-jdk8 (arm64) ==="
+          docker run --rm --platform linux/arm64 ${{ steps.meta-jdk8.outputs.tags }} docker --version
+          docker run --rm --platform linux/arm64 ${{ steps.meta-jdk8.outputs.tags }} java -version
+          docker run --rm --platform linux/arm64 ${{ steps.meta-jdk8.outputs.tags }} mvn --version
 
   build-node22-maven-jdk17:
     runs-on: ubuntu-latest
@@ -136,6 +162,21 @@ jobs:
           push: true
           tags: ${{ steps.meta-jdk17.outputs.tags }}
           labels: ${{ steps.meta-jdk17.outputs.labels }}
+          load: true
+
+      - name: Verify versions (amd64)
+        run: |
+          echo "=== node22-maven-jdk17 (amd64) ==="
+          docker run --rm --platform linux/amd64 ${{ steps.meta-jdk17.outputs.tags }} docker --version
+          docker run --rm --platform linux/amd64 ${{ steps.meta-jdk17.outputs.tags }} java -version
+          docker run --rm --platform linux/amd64 ${{ steps.meta-jdk17.outputs.tags }} mvn --version
+
+      - name: Verify versions (arm64)
+        run: |
+          echo "=== node22-maven-jdk17 (arm64) ==="
+          docker run --rm --platform linux/arm64 ${{ steps.meta-jdk17.outputs.tags }} docker --version
+          docker run --rm --platform linux/arm64 ${{ steps.meta-jdk17.outputs.tags }} java -version
+          docker run --rm --platform linux/arm64 ${{ steps.meta-jdk17.outputs.tags }} mvn --version
 
   build-node22-maven-jdk21:
     runs-on: ubuntu-latest
@@ -178,3 +219,18 @@ jobs:
           push: true
           tags: ${{ steps.meta-jdk21.outputs.tags }}
           labels: ${{ steps.meta-jdk21.outputs.labels }}
+          load: true
+
+      - name: Verify versions (amd64)
+        run: |
+          echo "=== node22-maven-jdk21 (amd64) ==="
+          docker run --rm --platform linux/amd64 ${{ steps.meta-jdk21.outputs.tags }} docker --version
+          docker run --rm --platform linux/amd64 ${{ steps.meta-jdk21.outputs.tags }} java -version
+          docker run --rm --platform linux/amd64 ${{ steps.meta-jdk21.outputs.tags }} mvn --version
+
+      - name: Verify versions (arm64)
+        run: |
+          echo "=== node22-maven-jdk21 (arm64) ==="
+          docker run --rm --platform linux/arm64 ${{ steps.meta-jdk21.outputs.tags }} docker --version
+          docker run --rm --platform linux/arm64 ${{ steps.meta-jdk21.outputs.tags }} java -version
+          docker run --rm --platform linux/arm64 ${{ steps.meta-jdk21.outputs.tags }} mvn --version
