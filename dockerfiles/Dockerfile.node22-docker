@@ -13,5 +13,11 @@ RUN apt-get update && apt-get install -y \
     && apt-get install -y docker-ce-cli \
     && rm -rf /var/lib/apt/lists/*
 
-# Verify Docker CLI installation
-RUN docker --version
+# Install yq and git
+RUN apt-get update && apt-get install -y git wget \
+    && wget -qO /usr/local/bin/yq https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64 \
+    && chmod +x /usr/local/bin/yq \
+    && rm -rf /var/lib/apt/lists/*
+
+# Verify installations
+RUN docker --version && yq --version && git --version
