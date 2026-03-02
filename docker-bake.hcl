@@ -46,3 +46,13 @@ target "node22-maven-jdk21" {
     "maintainer": "fjy8018"
   }
 }
+
+target "node22-python310" {
+  context = "./"
+  dockerfile = "dockerfiles/Dockerfile.node22-python310"
+  tags = ["ghcr.io/gitea-runner:node22-python310"]
+  platforms = ["linux/amd64", "linux/arm64"]
+  labels = {
+    "maintainer": "fjy8018"
+  }
+}
