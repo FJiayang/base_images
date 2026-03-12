@@ -56,3 +56,13 @@ target "node22-python310" {
     "maintainer": "fjy8018"
   }
 }
+
+target "node22-python313-docker" {
+  context = "./"
+  dockerfile = "dockerfiles/Dockerfile.node22-python313-docker"
+  tags = ["ghcr.io/gitea-runner:node22-python313-docker"]
+  platforms = ["linux/amd64", "linux/arm64"]
+  labels = {
+    "maintainer": "fjy8018"
+  }
+}
